@@ -1,0 +1,47 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc} % Change according your file encoding
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+\newtheorem{obs}{Observation}
+
+%opening
+\title{Seminar Report: [seminar ID] (e.g. Paxy)}
+\author{\textbf{Name of team members}}
+\date{\normalsize\today{}}
+
+\begin{document}
+
+%\maketitle
+Carlos Segarra \hfill Thursday, September 26th
+
+\vspace{15pt}
+
+\textbf{\Large Discrete and Algorithmic Geometry: Problems 4 and 5}
+
+\vspace{30pt}
+
+\textbf{\textit{4. Propose an algorithm that, given a point $p$ external to a convex polygon $\mathcal{P}$, finds the point of $\mathcal{P}$ closest to $p$. What happens if instead of finding the closest point we look for the farthest? What if we restrict the search to the vertices of $\mathcal{P}$?}}
+
+\vspace{3pt}
+
+Let $\lbrace q_1, \dots, q_n\rbrace$ be the set of vertices of $\mathcal{P}$ in clock-wise order. And let $f$ be the function s.t. for all $q \in \mathcal{P}$, sends $p$ to $d(q, p)$. Before starting with the proof, let us make two observations:
+\begin{obs}
+    $f$ is an uni-modal application. Alternatively, its derivative is a linear funcion that has only one zero.
+\end{obs}
+\begin{obs}
+    Let $q_{min}$ and $q_{max}$
+\end{obs}
+
+\vspace{10pt}
+
+\begin{center}
+    \hrule
+\end{center}
+
+\textbf{\textit{5. Propose an algorithm that, given two disjoitn convex polygons, $\mathcal{P}$ and $\mathcal{Q}$, finds the closest pair of points $p \in \mathcal{P}$ and $q \in \mathcal{Q}$.}}
+
+\end{document}
