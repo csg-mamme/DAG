@@ -4,6 +4,11 @@
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{multicol}
+\usepackage[noend]{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,positioning}
 \usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
 
 \newtheorem{obs}{Observation}
@@ -14,6 +19,17 @@
 \date{\normalsize\today{}}
 
 \begin{document}
+
+% New definitions
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
 
 %\maketitle
 Carlos Segarra \hfill Thursday, September 26th
@@ -32,9 +48,69 @@ Let $\lbrace q_1, \dots, q_n\rbrace$ be the set of vertices of $\mathcal{P}$ in 
 \begin{obs}
     $f$ is an uni-modal application. Alternatively, its derivative is a linear funcion that has only one zero.
 \end{obs}
-\begin{obs}
-    Let $q_{min}$ and $q_{max}$
+\begin{obs} \label{obs-2}
+    Let $q_{min}$ and $q_{min+1}$ be the closest and second to closest vertices from $\mathcal{P}$ to $p$. Then, the closest point in $\mathcal{P}$ to $p$ is either (i) $q_{min}$ or (ii) contained in the $q_{min}q_{min+1}$ segment.
 \end{obs}
+
+Note that the second observation applies symetrically to the farthest point in $\mathcal{P}$. 
+Further, once we find the two closest points, checking wether we are in case (i) or case (ii) from Obs~\ref{obs-2} can be done in constant time testing if $p$ belongs to the triangle drawn by the line throguh $p$ parallel to $q_{min}q_{min+1}$ and the two lines through $p_{min}$ orthogonal to the segments incident to $p_{min}$.
+
+\tikzset{
+  my poly/.style={regular polygon, regular polygon sides=6,fill=gray!#1,minimum size=2cm, draw},
+}
+
+\begin{figure}[h!]
+    \resizebox{.5\linewidth}{!}{
+    \begin{tikzpicture}[node distance=0pt, every node/.style={outer sep=0pt}]
+        \draw [help lines,gray!50,step =0.1] (-0.5,-0.5) grid (1,0.5);
+      %\node (1-C1) [my poly=10] {C1};
+        \node (poly) [regular polygon, regular polygon sides=9, draw, minimum size = 0.5cm] at (0,0) {};
+        %\fill[red] at (0.7, 0.2) circle (1pt);
+        %\node[fill=red, minimum size = 0.01cm] at (0.7, -0.2) {};
+      %\foreach \i/\j/\k/\m in {4/2/2/30,3/1/3/10,2/6/4/10,1/5/5/10,6/4/6/10,5/3/7/10}
+      %\node (1-C\k) [my poly=\m, anchor=corner \i] at (1-C1.corner \j) {C\k};
+    \end{tikzpicture}}
+\end{figure}
+
+Below, we include the Algorithm for computing the closest point to a polygon, note that, in order to find the farthest we could use the same exact algorithm
+\begin{algorithm}
+  \caption{Unknown TX T-DAG Generation from its root. \label{alg:dag-generation}}
+  \begin{multicols}{2}
+  \begin{algorithmic}[1]
+    %\Procedure{T-DAG Generation}{$s$}
+        \State $start \gets 1$
+        \State $end \gets \frac{n}{2}$
+        \While{$start \leq end$}
+            \State $\Delta_A \gets d(q_{start + 1}, p) - d(q_{start}, p)$
+            \State $\Delta_B \gets d(q_{end + 1}, p) - d(q_{end}, p)$
+            \Switch{$\text{sign}(\Delta_A)\text{, sign}( \Delta_B)$}
+                \Case{$+ +$}
+                \EndCase
+                \Case{$+ -$}
+                    \State $start \gets end$ 
+                    \State $end \gets end + \frac{end - start}{2}$
+                \EndCase
+                \Case{$- +$}
+                    \State $end \gets end - \frac{end - start}{2}$
+                \EndCase
+                \Case{$- -$}
+                    \State $end \gets \frac{end}{2}$
+                \EndCase
+            \EndSwitch
+        \EndWhile
+        \If{$q \in \Delta(q_{min}, \bar{p_1}, \bar{p_2})$}
+            \State $q_{min} = \underset{q \in \lbrace q_{start}, q_{end}\rbrace}{\text{argmin}}{(d(q, p))}$
+        \Else
+            \State $q_{min} \gets \text{line}(\perp q_{start}q_{end}, p) \cap q_{start}q_{end}$
+        \EndIf
+        \State $d_{min} \gets d(q_{min}, p)$
+        \State \Return $d_{min}$
+    %\EndProcedure
+  \end{algorithmic}
+  \end{multicols}
+\end{algorithm}
+
+\textbf{Running Time}
 
 \vspace{10pt}
 
