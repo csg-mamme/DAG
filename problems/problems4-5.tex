@@ -38,7 +38,7 @@ Carlos Segarra \hfill Thursday, September 26th
 
 \textbf{\Large Discrete and Algorithmic Geometry: Problems 4 and 5}
 
-\vspace{30pt}
+\vspace{20pt}
 
 \textbf{\textit{4. Propose an algorithm that, given a point $p$ external to a convex polygon $\mathcal{P}$, finds the point of $\mathcal{P}$ closest to $p$. What happens if instead of finding the closest point we look for the farthest? What if we restrict the search to the vertices of $\mathcal{P}$?}}
 
@@ -60,11 +60,13 @@ Further, once we find the two closest points, checking wether we are in case (i)
 }
 
 \begin{figure}[h!]
-    \resizebox{.5\linewidth}{!}{
+    \resizebox{\linewidth}{!}{
     \begin{tikzpicture}[node distance=0pt, every node/.style={outer sep=0pt}]
-        \draw [help lines,gray!50,step =0.1] (-0.5,-0.5) grid (1,0.5);
+        \draw [help lines,gray!50,step =0.1] (-0.5,-0.5) grid (4,0.5);
       %\node (1-C1) [my poly=10] {C1};
         \node (poly) [regular polygon, regular polygon sides=9, draw, minimum size = 0.5cm] at (0,0) {};
+        \node (poly) [regular polygon, regular polygon sides=9, draw, minimum size = 0.5cm] at (1.5,0) {};
+        \node (poly) [regular polygon, regular polygon sides=9, draw, minimum size = 0.5cm] at (3,0) {};
         %\fill[red] at (0.7, 0.2) circle (1pt);
         %\node[fill=red, minimum size = 0.01cm] at (0.7, -0.2) {};
       %\foreach \i/\j/\k/\m in {4/2/2/30,3/1/3/10,2/6/4/10,1/5/5/10,6/4/6/10,5/3/7/10}
@@ -74,7 +76,7 @@ Further, once we find the two closest points, checking wether we are in case (i)
 
 Below, we include the Algorithm for computing the closest point to a polygon, note that, in order to find the farthest we could use the same exact algorithm
 \begin{algorithm}
-  \caption{Unknown TX T-DAG Generation from its root. \label{alg:dag-generation}}
+    \caption{Given a polygon $\mathcal{P}$ given by its vertices $\lbrace q_1, \dots, q_n\rbrace$ and a point $p$, find the closest point in $\mathcal{P}$ to $p$. \label{alg:closest}}
   \begin{multicols}{2}
   \begin{algorithmic}[1]
     %\Procedure{T-DAG Generation}{$s$}
@@ -110,14 +112,9 @@ Below, we include the Algorithm for computing the closest point to a polygon, no
   \end{multicols}
 \end{algorithm}
 
-\textbf{Running Time}
+\textbf{Running Time} Assuming all operations with fixed argument size take constant time, the only step proportional to the size of the input is the while loop. Within the loop we only do steps that take constant time and we iter at most $\log(n)$ times, being $n$ the number of vertices. Hence the complexity of our algorithm is $\mathcal{O}(n)$.
 
-\vspace{10pt}
-
-\begin{center}
-    \hrule
-\end{center}
-
+\pagebreak 
 \textbf{\textit{5. Propose an algorithm that, given two disjoitn convex polygons, $\mathcal{P}$ and $\mathcal{Q}$, finds the closest pair of points $p \in \mathcal{P}$ and $q \in \mathcal{Q}$.}}
 
 \end{document}
