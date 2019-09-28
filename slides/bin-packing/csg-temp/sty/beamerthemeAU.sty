@@ -1,0 +1,368 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Presentation template and short Beamer example/tutorial.
+%% v2.1.9 - 24/02/2019
+%%
+%% Disclaimer: The internal coding of this theme is ugly. I do 
+%% not recommend using it as a basis for developing your own theme!
+%%
+%% Vincent Labatut 2017-19 <vincent.labatut@univ-avignon.fr>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% import various packages
+%\RequirePackage[utf8x]{inputenc}       % useless when compiling with LuaLaTeX
+\RequirePackage{babel}		            % language package
+\RequirePackage{tikz}                   % diagram package
+\RequirePackage{verbatim}               % mention latex source code
+\RequirePackage{appendixnumberbeamer}   % don't count appendix slides
+\RequirePackage{csvsimple}				% populates table with file content
+\RequirePackage{soul}					% improves hyphenation
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% misc custom commands
+\newcommand{\tpc}{\textperiodcentered}  % middle dot command
+\RequirePackage{pifont}                 % dingbat characters
+\newcommand{\cmark}{\ding{51}}          % command for check mark
+\newcommand{\xmark}{\ding{55}}          % command for matching cross mark
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% define custom colors
+%\definecolor{fgRed}{RGB}{241,92,78}
+%\definecolor{fgDarkRed}{RGB}{91,27,22}
+%\definecolor{fgLightRed}{RGB}{241,167,159}
+%\definecolor{fgVeryLightRed}{RGB}{248,226,224}
+%\definecolor{fgYellow}{RGB}{250,165,25}
+%\definecolor{fgDeepRed}{RGB}{238,42,36}
+%\definecolor{fgLightYellow}{RGB}{229,208,66}
+%\definecolor{bgLightGray}{RGB}{235,235,235}
+% CSG Custom Colors
+\definecolor{fgRed}{RGB}{34,0,205}
+\definecolor{fgDarkRed}{RGB}{0,0,51}
+\definecolor{fgLightRed}{RGB}{153,153,255}
+\definecolor{fgVeryLightRed}{RGB}{204,204,255}
+\definecolor{fgYellow}{RGB}{250,165,25}
+\definecolor{fgDeepRed}{RGB}{0,51,251}
+\definecolor{fgLightYellow}{RGB}{229,208,66}
+\definecolor{bgLightGray}{RGB}{235,235,235}
+\definecolor{darkgreen}{RGB}{0,51,0}
+\definecolor{darkred}{RGB}{153,0,0}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom equations
+\makeatletter                           % color of equation numbers
+\def\tagform@#1{\maketag@@@{(\textcolor{fgRed}{#1})\@@italiccorr}}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% bibliographic settings
+\RequirePackage{doi}					% displays DOIs in the bibliography
+\RequirePackage[autostyle]{csquotes}	% don't remember why I put this
+\RequirePackage[
+    sorting=nty,                        % sorted by name, title, year
+	maxcitenames=2,						% one author max in the text
+	maxbibnames=99,						% list all authors in the reference list
+%	style=numeric,						% numeric style for reference list
+%	citestyle=numeric-comp,				% numeric style for citations
+	style=alphabetic,					% NOTE: if you want the author-year style instead,
+	citestyle=alphabetic,			    % uncomment these 2 lines and comment both ones above
+    backend=biber]		            	% uses biber to compile (instead of bibtex)
+{biblatex}							    % uses BibLaTeX (instead of BibTeX)
+% use the same number of names in \fullcite and \footfullcite as in the bibliographic section
+% source retrieved from https://tex.stackexchange.com/a/126245/31360
+\makeatletter
+\DeclareCiteCommand{\fullcite}
+  {\defcounter{maxnames}{\blx@maxbibnames}%
+    \usebibmacro{prenote}}
+  {\usedriver
+     {\DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+\DeclareCiteCommand{\footfullcite}[\mkbibfootnote]
+  {\defcounter{maxnames}{\blx@maxbibnames}%
+    \usebibmacro{prenote}}
+  {\usedriver
+     {\DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% vertical rule to separate subfigures
+\newcommand{\rulesep}{\unskip\ \vrule\ }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom algorithms
+\RequirePackage[                    % environment for pseudo code
+%   french,                         % language in the caption (default: English) (>> now passed directly through documentclass options)
+    ruled,                          % boxed, ruled (shaded in v5.3)
+    linesnumbered,                  % add line numbers
+    longend,                        % block-specific end keyword
+    procnumbered                    % functions/procedures must be numbered
+]{csg-temp/sty/algorithm2e}               % Overleaf does not have the latest version installed
+\SetAlCapFnt{\color{fgRed}}	        % change caption font (in algorithm floats)
+\SetProcFnt{\color{fgRed}}			% change caption font (in function/procedure floats)
+\SetAlCapSty{}                      % remove bold from the caption
+\SetNlSty{}{}{}                     % remove bold from line numbers
+% keep the caption below 
+% (see https://tex.stackexchange.com/questions/27671/algorithm2e-with-ruled-but-with-caption-underneath)
+% and also shaded background
+% (see https://tex.stackexchange.com/questions/375669/apply-background-color-in-algorithm2e-but-not-on-the-caption)
+\makeatletter                       
+\newenvironment{algorithm2e}[1][htpb]
+{   \def\@algocf@pre@ruled{%
+        \setlength{\OuterFrameSep}{0pt}
+	    \setlength{\FrameSep}{1mm}
+	    \colorlet{shadecolor}{bgLightGray}
+        \begin{shaded}}%
+    \def\@algocf@post@ruled{\end{shaded}\relax}%    % without horizontal separator
+%    \def\@algocf@post@ruled{\end{shaded}\kern\interspacealgoruled\hrule  height\algoheightrule\kern3pt\relax}%           % with horizontal separator
+    \def\@algocf@capt@ruled{under}%
+    \begin{algorithm}[#1]}
+  {\end{algorithm}}
+\makeatother
+\setlength\algotitleheightrule{0pt} % remove the last rule (below the caption)
+\SetAlgoCaptionLayout{centerline}   % center the caption
+%\SetAlgoCaptionSeparator{--}	    % change the caption separator character (note: moved that to the options part, so that it applies only to French)
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom listings
+%\RequirePackage{listings}					    % format source code
+%\RequirePackage{xcolor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Current workaround to get listings package to compile
+% see: https://tex.stackexchange.com/questions/451532/recent-issues-with-lstlinebgrd-package-with-listings-after-the-latters-updates
+%\makeatletter
+%\let\old@lstKV@SwitchCases\lstKV@SwitchCases
+%\def\lstKV@SwitchCases#1#2#3{}
+%\makeatother
+%%\usepackage{lstlinebgrd}
+%\RequirePackage{lstlinebgrd}				    % change background color
+%\makeatletter
+%\let\lstKV@SwitchCases\old@lstKV@SwitchCases
+%
+%\lst@Key{numbers}{none}{%
+%    \def\lst@PlaceNumber{\lst@linebgrd}%
+%    \lstKV@SwitchCases{#1}%
+%    {none:\\%
+%     left:\def\lst@PlaceNumber{\llap{\normalfont
+%                \lst@numberstyle{\thelstnumber}\kern\lst@numbersep}\lst@linebgrd}\\%
+%     right:\def\lst@PlaceNumber{\rlap{\normalfont
+%                \kern\linewidth \kern\lst@numbersep
+%                \lst@numberstyle{\thelstnumber}}\lst@linebgrd}%
+%    }{\PackageError{Listings}{Numbers #1 unknown}\@ehc}}
+%\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\definecolor{colKeywords}{RGB}{127,0,85}	    % keyword color
+%\definecolor{colComments}{RGB}{77,109,141}		% comment color
+%\definecolor{colStrings}{RGB}{42,0,255}	        % string literal color
+%\definecolor{colLstHL}{RGB}{255,255,153}	    % highlight color
+%\definecolor{colNumber}{rgb}{0.50,0.50,0.50}	% line number color
+%\lstset{
+%%   frame=tb,                                   % frame around the source code
+%	aboveskip=3mm,                              % space before the source code
+%	belowskip=3mm,                              % space after the source code
+%	showstringspaces=false,                     % display space char as underscore
+%	columns=flexible,
+%    captionpos=b,                               % position of the caption (t or b)
+%	basicstyle={\small\ttfamily},               % only for French: should add \NoAutoSpacing ... but works fine without it, apparently.
+%	keywordstyle=\color{colKeywords},           % set keyword color
+%	commentstyle=\color{colComments},           % set comment color
+%	stringstyle=\color{colStrings},             % set string literal color
+%    backgroundcolor=\color{bgLightGray},        % set background color
+%	numbers=left,	                            % line numbering: left, none
+%	numberstyle=\tiny\color{colNumber},         % line number format
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3,                                  % size of tabulation (in chars)
+%    literate=%
+%		{à}{{\`a}}1
+%        {À}{{\`A}}1
+%        {á}{{\'a}}1
+%        {Á}{{\'A}}1
+%		{â}{{\^a}}1
+%        {Â}{{\^A}}1
+%        {ä}{{\"a}}1
+%        {Ä}{{\"A}}1
+%        {å}{{\r a}}1
+%        {Å}{{\r A}}1
+%        {æ}{{\ae}}1
+%        {Æ}{{\AE}}1
+%		{ç}{{\c{c}}}1
+%        {Ç}{{\c{C}}}1
+%		{é}{{\'e}}1
+%        {É}{{\'E}}1
+%		{è}{{\`e}}1
+%        {È}{{\`E}}1
+%		{ë}{{\"e}}1
+%        {Ë}{{\"E}}1
+%		{ê}{{\^e}}1
+%        {Ê}{{\^E}}1
+%        {í}{{\'i}}1
+%        {Í}{{\'I}}1
+%        {ì}{{\`i}}1
+%        {Ì}{{\`I}}1
+%		{ï}{{\"i}}1
+%        {Ï}{{\"I}}1
+%		{î}{{\^i}}1
+%        {Î}{{\^I}}1
+%        {ñ}{{\~n}}1
+%        {Ñ}{{\~N}}1
+%        {ó}{{\'o}}1
+%        {Ó}{{\'O}}1
+%        {ò}{{\`o}}1
+%        {Ò}{{\`O}}1
+%		{ö}{{\"o}}1
+%        {Ö}{{\"O}}1
+%		{ô}{{\^o}}1
+%        {Ö}{{\^O}}1
+%        {ő}{{\H{o}}}1
+%        {Ő}{{\H{O}}}1
+%        {ø}{{\o}}1
+%        {œ}{{\oe}}1
+%        {Œ}{{\OE}}1
+%        {ß}{{\ss}}1
+%        {ú}{{\'u}}1
+%        {Ú}{{\'U}}1
+%		{ù}{{\`u}}1
+%        {Ù}{{\`U}}1
+%		{ü}{{\"u}}1
+%        {Ü}{{\"U}}1
+%		{û}{{\^u}}1
+%        {Û}{{\^U}}1
+%        {ű}{{\H{u}}}1
+%        {Ű}{{\H{U}}}1
+%        {€}{{\euro}}1 
+%        {£}{{\pounds}}1 
+%        {«}{{\guillemotleft}}1
+%        {»}{{\guillemotright}}1 
+%        {¿}{{?`}}1
+%}
+%% this is just to be able to mention the listings environments... in latex listings environments
+%\lstnewenvironment{TeXlstlisting}{\lstset{language=[LaTeX]TeX,numbers=none}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% typewriter-type environments
+\RequirePackage{framed}
+\newenvironment{filetext}
+{	\setlength{\OuterFrameSep}{0pt}						% no frame around the text
+	\setlength{\FrameSep}{1mm}							% just a bit of colored space around the text
+	\colorlet{shadecolor}{fgVeryLightRed}	            % background color to display files
+	\begin{shaded}\begin{raggedright}\small\ttfamily}
+{\end{raggedright}\end{shaded}\par}
+\newenvironment{consoletext}
+{	\setlength{\OuterFrameSep}{0pt}						% no frame around the text
+	\setlength{\FrameSep}{1mm}							% just a bit of colored space around the text
+	\colorlet{shadecolor}{fgDarkRed}       	            % background color to display console
+	\begin{shaded}\begin{raggedright}\small\ttfamily\color{fgVeryLightRed}}
+{\end{raggedright}\end{shaded}\par}
+\RequirePackage{textcomp}                               % for the \textquotesingle command (straight single quotes in \texttt)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% additional TikZ sub-librairies
+\usetikzlibrary{
+    calc,
+%    backgrounds,
+%    mindmap,
+    positioning,
+%    babel,
+    decorations.pathreplacing
+}
+% animations in TikZ figures
+% http://tex.stackexchange.com/questions/136143/tikz-animated-figure-in-beamer
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% handle hyperref warnings
+\makeatletter
+\pdfstringdefDisableCommands{%
+  \def\\{}%
+  \def\hbox{}%
+  \def\mathsurround{}%
+  \def\z@{0}%
+  \def\@@underline{}%
+  \def\textsuperscript#1{}%
+  \def\texttt#1{<#1>}%
+}
+\makeatother
+% check this: https://tex.stackexchange.com/questions/306988/automatically-add-texorpdfstring-for-math-mode-in-section-titles
+% sets template version
+\hypersetup{
+    pdfkeywords={mod\`ele de pr\'esentation v2.1.9},
+    pdfencoding=auto            % avoid encoding problems in PDF bookmarks (French)
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% caption settings (start)
+\newcommand{\mysep}{colon}                      % default label separator (might be redefined for French)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% handle the rest of the options
+\DeclareOptionBeamer{light}                     % sets different title and section pages
+{   \PassOptionsToPackage{light}{csg-temp/sty/beamerinnerthemeAU}
+    \PassOptionsToPackage{light}{csg-temp/sty/beamercolorthemeAU}
+}
+\DeclareOptionBeamer{french}                    % only for French
+{   % package algorithm
+    \SetAlgoCaptionSeparator{--}                % change the caption separator character
+    % package listings
+    \renewcommand{\mysep}{myendash}
+%    \captionsetup{labelsep=myendash}            % separator between label and text
+}
+\DeclareOptionBeamer{handout}                   % console text in video inverse
+{   \renewenvironment{consoletext}              % redefine the previously defined environment
+    {	\setlength{\OuterFrameSep}{0pt}	        % no frame around the text
+	    \setlength{\FrameSep}{1mm}		        % just a bit of colored space around the text
+	    \colorlet{shadecolor}{fgVeryLightRed}   % background color to display console
+	    \begin{framed}\begin{raggedright}\small\ttfamily\color{fgDarkRed}}
+    {\end{raggedright}\end{framed}\par}
+}
+\ProcessOptionsBeamer
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% caption settings (end)
+\RequirePackage{caption}				% caption customisation
+\DeclareCaptionLabelSeparator{myendash}{ \textcolor{fgRed!50}{\space\textendash\space}}
+\captionsetup{
+	labelfont={color=fgRed, small},	    % font(sf), color, bold, size of the caption label
+	textfont={small},					% font(sf) and size of the caption text itself
+	labelsep=\mysep,					% separator between label and text
+%	margin=10mm							% left/right margins
+    skip=0.4cm                          % space between object and caption
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% settings
+%\useinnertheme{AU}
+%\useoutertheme{AU}
+%\usecolortheme{AU}
+%\usefonttheme{AU}
+\RequirePackage{csg-temp/sty/beamerinnerthemeAU}
+\RequirePackage{csg-temp/sty/beamerouterthemeAU}
+\RequirePackage{csg-temp/sty/beamercolorthemeAU}
+\RequirePackage{csg-temp/sty/beamerfontthemeAU}
+
+
+
+\mode<all>

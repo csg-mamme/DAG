@@ -1,0 +1,63 @@
+\mode<presentation>
+
+\definecolor{titleCol}{RGB}{255,255,255}
+\DeclareOptionBeamer{light}{\definecolor{titleCol}{RGB}{0,0,0}}
+\ProcessOptionsBeamer
+
+% make covered text translucent
+\setbeamercovered{transparent}  % dynamic invisible transparent
+
+\hypersetup{colorlinks=true,
+    linkcolor=fgRed,    % normal internal links
+    anchorcolor=,       % anchor text
+    citecolor=fgRed,    % bibliographical citations in text
+    filecolor=fgRed,    %  URLs which open local files
+    menucolor=,         % Acrobat menu items
+    runcolor=fgRed,     % run links (launch annotations)
+    urlcolor=fgRed      % linked URLs
+}
+
+%https://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+%\hypersetup{colorlinks,allcolors=fgRed}
+
+\setbeamercolor*{title page header}{fg=titleCol}
+\setbeamercolor*{subtitle page header}{fg=titleCol}
+\setbeamercolor*{author}{fg=titleCol}
+\setbeamercolor*{institute}{fg=titleCol}
+\setbeamercolor*{date}{fg=titleCol}
+\setbeamercolor*{highlight title}{fg=titleCol}
+
+\setbeamercolor*{frametitle}{fg=white}
+\setbeamercolor{title in head/foot}{fg=white}   % doesn't work, because of hyperlink
+\setbeamercolor{author in head/foot}{fg=white}
+\setbeamercolor{date in head/foot}{fg=white}
+\setbeamercolor{number in head/foot}{fg=white}
+
+\setbeamercolor{section in toc}{fg=fgDarkRed}   % doesn't work, apparently because of hyperref
+\setbeamercolor{subsection in toc}{fg=black}
+
+\setbeamercolor{item}{fg=fgRed}
+\setbeamercolor{subitem}{fg=fgYellow}
+\setbeamercolor{subsubitem}{fg=fgLightYellow}
+\setbeamercolor{item projected}{bg=fgRed}
+\setbeamercolor{subitem projected}{bg=fgYellow}
+\setbeamercolor{subsubitem projected}{bg=fgLightYellow}
+
+\setbeamercolor{caption name}{fg=fgRed}
+\setbeamercolor{footnote mark}{fg=fgRed}
+\setbeamercolor{alerted text}{fg=fgRed}
+\setbeamercolor{qed symbol}{fg=fgRed}
+\setbeamercolor{bibliography entry author}{fg=fgRed}
+\setbeamercolor{bibliography entry title}{fg=fgYellow}
+\setbeamercolor{bibliography entry location}{fg=fgDarkRed}
+\setbeamercolor{bibliography entry note}{fg=black}
+
+\setbeamercolor{block title}{bg=fgRed, fg=white}
+\setbeamercolor{block body}{bg=black!10}
+\setbeamercolor{block title alerted}{bg=fgDeepRed, fg=white}
+\setbeamercolor{block body alerted}{bg=fgDeepRed!20}
+\setbeamercolor{block title example}{bg=fgYellow, fg=white}
+\setbeamercolor{block body example}{bg=black!10}
+
+\mode
+<all>

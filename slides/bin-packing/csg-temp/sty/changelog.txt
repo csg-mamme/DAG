@@ -1,0 +1,21 @@
+Changelog:
+v2.1.9 - 24/02/2019 : added \fauxsc for fake small caps
+v2.1.8 - 02/02/2019 : corrected bugs related to: title page affiliations, bibliographic citations, footer
+v2.1.7 -    01/2019 : commands for check/cross; fixed minor PDF bug
+v2.1.6 -    01/2019 : fixed bug preventing to display captions for listing 
+v2.1.5 -    01/2019 : added middle dot in the French slides
+v2.1.4 -    01/2019 : video-invert console in handout mode
+v2.1.3 -    01/2019 : listing-related adjustments 
+v2.1.2 -    01/2019 : algorithms-related adjustments 
+v2.1.1 -    01/2019 : corrected an error in the lstlistings example
+v2.1   -    12/2018 : corrected a few minor bugs, refactored files and folders
+v2     -    12/2018 : adaptation of the new official AU model, from scratch
+v1.3   -    11/2018
+v1.2   -    03/2018
+v1.1   -    10/2017
+v1     -    07/2017 : modification of the Metropolis theme
+
+To do:
+- In the title page, affiliation numbers are displayed using a serif font (but not regular superscripts).
+- The title page is not very appropriate for class slides
+- Develop a 16/9 version for wide screens
