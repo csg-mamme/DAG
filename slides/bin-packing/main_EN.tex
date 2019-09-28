@@ -42,7 +42,7 @@
 \subtitle{Master in Advanced Mathematics and Mathematical Engineering - MAMME}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % date of the presentation (leave empty for no date, default is today)
-\date[\datedayname, \today] % leave empty for no date in footer
+\date[\today] % leave empty for no date in footer
     {\datedayname, \today}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % authors and their affiliations (the latter is optional)
@@ -81,11 +81,34 @@
     \frametitle{Bin Packing Problem}
     \framesubtitle{Definition, History, and Examples}
 
+    \begin{block}{Problem Statement}
+        Suppose we have $n$ objects, each of a given size, and some bins of equal capacity. We want to assign the objects tot he bins using as few bins as possible. Of course the total size of the objects assigned to one bin should not exceed its capacity.$[1]$
+    \end{block}
+
+    \tiny
+    \begin{description}
+        \item $[1]$ Korte, Bernhard; Vygen, Jens (2006). \textbf{\textit{"Bin-Packing"}}. Combinatorial Optimization: Theory and Algorithms. Algorithms and Combinatorics 21. Springe. pp. 426–441.
+    \end{description}
+
 \end{frame}
 
 \begin{frame}
     \frametitle{Bin Packing Problem}
     \framesubtitle{Formal Statement}
+
+    \vspace{-10pt}
+
+    Given a set of bins $S_1, S_2, \dots$ with the same size $V$ and a list of $n$ items with sizes $a_1, \dots, a_n$ to pack,
+    \begin{equation*}
+        \begin{aligned}
+            \text{minimize } & B = \sum\limits_{i = 1}^{n} y_i \\
+            \text{subject to } & B \geq 1 \\
+            & \sum\limits_{j = 1}^{n}a_jx_{ij} \leq V y_i, \quad \quad \forall i \in \lbrace 1, \dots, n\rbrace \\
+            & \sum_{i = 1}^n x_{ij} = 1 \qquad \qquad x_{ij}, y_i \in \lbrace 0, 1 \rbrace \\
+            %& x_i \in \lbrace 0, 1 \rbrace
+        \end{aligned}
+    \end{equation*}
+    \hspace{20pt} where $y_i = 1$ if bin $S_i$ is used and $x_{ij} = 1$ if item $a_j$ is put into bin $S_i$.
 
 \end{frame}
 
