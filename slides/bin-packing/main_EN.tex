@@ -34,6 +34,10 @@
 \usepackage{datenumber}
 \usepackage{varwidth}
 
+% Math Mode
+%\pgfmathsetseed{\number\pdfrandomseed}
+\pgfmathsetmacro{\a}{random(0,10)}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % title and subtitle of the presentation (the latter is optional)
 \subtitle{Discrete and Algorithmic Geometry} % leave empty if no subtitle
@@ -85,10 +89,29 @@
         Suppose we have $n$ objects, each of a given size, and some bins of equal capacity. We want to assign the objects tot he bins using as few bins as possible. Of course the total size of the objects assigned to one bin should not exceed its capacity.$[1]$
     \end{block}
 
-    \tiny
+
+    \small
     \begin{description}
         \item $[1]$ Korte, Bernhard; Vygen, Jens (2006). \textbf{\textit{"Bin-Packing"}}. Combinatorial Optimization: Theory and Algorithms. Algorithms and Combinatorics 21. Springe. pp. 426–441.
     \end{description}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Bin Packing Problem}
+    \framesubtitle{Definition, History, and Examples}
+
+    \begin{alertblock}{Complexity and Applications}
+        The Bin Packing decision problem is \textbf{NP-complete}. The formulation is applicable to a variety of real-world problems and admits several reformulations.
+    \end{alertblock}
+
+    \begin{enumerate}
+        \item Online bin packing.
+        \item Filling up trucks in a logistics environment.
+        \item Creating file backups in media.
+        \item Knapsack problem (one bin and each item has cost and value).
+        \item Virtual Machine placement in a data center.
+    \end{enumerate}
 
 \end{frame}
 
@@ -111,6 +134,52 @@
     \hspace{20pt} where $y_i = 1$ if bin $S_i$ is used and $x_{ij} = 1$ if item $a_j$ is put into bin $S_i$.
 
 \end{frame}
+
+\begin{frame}
+    \frametitle{Bin Packing in Geometry}
+    \framesubtitle{2D Bin Packing}
+    
+    \begin{itemize}
+        \item The classic representation of the Bin Packing problem has a straight-forward 2D geometric representation.
+    \end{itemize}
+
+    \vspace{-10pt}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.8\linewidth}{!}{
+        \begin{tikzpicture}
+            \foreach \x in {0,...,7}
+            {
+                \begin{scope}
+                    \pgfmathparse{250*rnd+5}
+                    \edef\tmpi{\pgfmathresult}
+                    \pgfmathparse{210*rnd+45}
+                    \edef\tmpii{\pgfmathresult}
+                    \pgfmathparse{230*rnd+25}
+                    \edef\tmpiii{\pgfmathresult}
+                    \pgfmathparse{0.75*rnd+0.25}
+                    \edef\opac{\pgfmathresult}
+                    \definecolor{MyColor}{RGB}{\tmpi,\tmpii,\tmpiii}    
+                    \pgfmathparse{int(4*rnd) + 1}
+                    \edef\rndheight{\pgfmathresult}
+                    %\draw[fill=MyColor!40] (0,\x*0.5) rectangle (1,0.5*\x + .5) node[pos=.5] (orig-\x) {$a_{\x}$};
+                    \draw[fill=MyColor!40] (\x, 0) rectangle (\x + 1, \rndheight) node[anchor=south] (orig-\x) at (\x + 0.5, \rndheight) {$a_{\x}$}; 
+                \end{scope}
+            }
+            \foreach \y in {0,...,5}
+            {
+                \begin{scope}
+                    \draw (9 + \y, 0) rectangle (10 + \y, 5) node[anchor=south east] (bin-\y) {$S_{\y}$};
+                    %\draw (5 + \y, 0) rectangle (6 + \y, \tmpi);
+                \end{scope}
+            }
+        \end{tikzpicture}
+        }
+        %\caption{Classsic representation of the bin packing problem.}
+    \end{figure}
+\end{frame}
+
 
 \begin{frame}
     \frametitle{Solving BP}
