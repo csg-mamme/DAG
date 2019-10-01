@@ -35,8 +35,11 @@
 \usepackage{varwidth}
 
 % Math Mode
-%\pgfmathsetseed{\number\pdfrandomseed}
-\pgfmathsetmacro{\a}{random(0,10)}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{algorithm2e}
+%\usepackage{multicol}
+%\usepackage[noend]{algpseudocode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % title and subtitle of the presentation (the latter is optional)
@@ -187,15 +190,18 @@
 
     \begin{columns}
         \begin{column}{.45\textwidth}
+            \begin{algorithm2e}[H]
+                \KwIn{Some Input}
+                \caption{First Fit Algorithm}
+            \end{algorithm2e}
         \end{column}
         \begin{column}{.45\textwidth}
+            \begin{algorithm2e}[H]
+                \KwIn{Some Input}
+                \caption{First Fit Decreasing Algorithm}
+            \end{algorithm2e}
         \end{column}
     \end{columns}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Bin Packing in Geometry}
-
 \end{frame}
 
 \begin{frame}
