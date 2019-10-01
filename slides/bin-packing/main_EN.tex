@@ -190,18 +190,47 @@
 
     \begin{columns}
         \begin{column}{.45\textwidth}
-            \begin{algorithm2e}[H]
-                \KwIn{Some Input}
-                \caption{First Fit Algorithm}
-            \end{algorithm2e}
+            \textbf{First Fit Algorithm:}
+            \begin{itemize}
+                \item Try to fit each element in the current set of opened bins. If it fits in none, open a new bin.
+                \item Runtime $\mathcal{O}(n \log n)$
+                \item Approximation factor: $1.7$
+            \end{itemize}
+            \textbf{First Fit Decreasing Algorithm:}
+            \begin{itemize}
+                \item Order the elements to sort, and apply First Fit.
+                \item Runtime $\mathcal{O}(n \log n)$
+                \item Approximation factor: $1.222$
+            \end{itemize}
         \end{column}
         \begin{column}{.45\textwidth}
             \begin{algorithm2e}[H]
                 \KwIn{Some Input}
-                \caption{First Fit Decreasing Algorithm}
+                \While{$item \gets S.\text{pop}()$}
+                {
+                    \For{$bin \in B$}
+                    {
+                        \If{$\text{fits}(item, bin)$}
+                        {
+                            $\text{put}(item, bin)$\;
+                            \textbf{break}\;
+                        }
+                    }
+                    \Else
+                    {
+                        $\text{put}(item, \text{new}(bin))$\;
+                    }
+                    % If it does not fit in any bin, open new one
+                }
+                \caption{First Fit Algorithm}
             \end{algorithm2e}
         \end{column}
     \end{columns}
+
+    \tiny
+    \begin{description}
+        \item $[1]$ Maxence Delorme, Manuel Iori, Silvano Martello. \textbf{\textit{"Bin-Packing and Cutting Stock Problems: Mathematical Models and Exact Algorithms"}}.  Section 2.3.
+    \end{description}
 \end{frame}
 
 \begin{frame}
