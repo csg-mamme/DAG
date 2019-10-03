@@ -234,18 +234,59 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Modern Applications: VM Placement}
+    \frametitle{Modern Application: VM Placement}
 
     \begin{figure}[h!]
         \centering
-        \resizebox{0.8\linewidth}{!}{
+        \resizebox{0.9\linewidth}{!}{
         \begin{tikzpicture}
-            \draw[dashed] (0,0) rectangle (4, 6);
-            \draw[dashed] (8,0) rectangle (12, 6);
-            \draw (8.15,0.5) rectangle (8.65, 5.5);
-            \draw (8.7,0.5) rectangle (8.95, 5.5);
-            \draw (9,0.5) rectangle (9.45, 5.5);
-            \draw (9.5,0.5) rectangle (10.5, 5.5);
+            % Initial Goal Function
+            \node[align=left] at (3, 6) {\textbf{Objective Function:} \\ - Minimize Economical Cost \\ - Minimize Energy Consumption \\ - Maximize Data Locality};
+
+            % Resource Requests
+            \draw[dashed] (2,1.8) rectangle (7, 4);
+            \node[anchor=south] at (4.5, 4) {\textbf{Resource Requests}($RR$)};
+            \node[anchor=north] at (4.5, 1.8) {Online or Offline fashion};
+            % RR1
+            \draw[fill=blue!30] (6.15, 2.5) rectangle (6.85, 3.5) node[pos=.5] {$RR_1$};
+            \draw[<->] (6.15, 2.4) -- (6.85, 2.4) node[anchor=north, pos=.5] {$M$};
+            \draw[<->] (6.05, 2.5) -- (6.05, 3.5) node[anchor=east, pos=.5] {$D$};
+            % RR2
+            \draw[fill=green!30] (5.15, 2.5) rectangle (5.45, 3);
+            \node[anchor=south] at (5.3, 3) {$RR_2$};
+            \draw[<->] (5.15, 2.4) -- (5.45, 2.4) node[anchor=north, pos=.5] {$M$};
+            \draw[<->] (5.05, 2.5) -- (5.05, 3) node[anchor=east, pos=.5] {$D$};
+            % RR3
+            \draw[fill=brown!30] (3.65, 2.5) rectangle (4.35, 3.85) node[pos=.5] {$RR_3$};
+            \draw[<->] (3.65, 2.4) -- (4.35, 2.4) node[anchor=north, pos=.5] {$M$};
+            \draw[<->] (3.55, 2.5) -- (3.55, 3.85) node[anchor=east, pos=.5] {$D$};
+            \node at (2.6, 3) {\textbf{$\dots$}};
+
+
+            % DC
+            \node at (13, 7) {\textbf{Datacenters ($DC$)}};
+
+            % Datacenter 1
+            \draw[fill=gray!10, dashed] (8,0) rectangle (12, 6);
+            \node[anchor=north] at (10, 0) {\textbf{Physical Machines ($PM$)}};
+            \node[anchor=south] at (10, 6) {$DC_1$};
+            \draw[fill=blue!15] (8.15,0.5) rectangle (8.65, 5.5);
+            \node[anchor=north] at (8.4, 0.5) {$PM_1$};
+            \draw[fill=green!15] (8.7,0.5) rectangle (8.95, 5.5);
+            \node[anchor=south] at (8.825, 5.5) {$PM_2$};
+            \draw[fill=yellow!15] (9,0.5) rectangle (9.45, 5.5);
+            \node[anchor=north] at (9.22, 0.5) {$PM_3$};
+            \draw[fill=red!15] (9.5,0.5) rectangle (10.35, 5.5);
+            \node[anchor=south] at (9.925, 5.5) {$PM_4$};
+            \node at (10.85, 3) {\textbf{$\dots$}};
+            \draw[fill=orange!15] (11.35, 0.5) rectangle (11.85, 5.5);
+            \node[anchor=north] at (11.525, 0.5) {$PM_n$};
+            \node at (13, 3) {\textbf{$\dots$}};
+
+            % Datacenter 2
+            \draw[fill=gray!15, dashed] (14,0) rectangle (16, 6);
+            \node[anchor=south] at (15, 6) {$DC_m$};
+            \node at (15, 3) {\textbf{$\dots$}};
         \end{tikzpicture}
         }
     \end{figure}
